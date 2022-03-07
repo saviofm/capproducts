@@ -1,0 +1,153 @@
+_schema-version: "3.1"
+ID: capproducts
+description: A simple CAP project.
+version: 1.0.1
+parameters:
+  ###deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
+
+
+# ----------------------------------------------------------------
+# ----------------------------------------------------------------
+# ----------------------------MODULES-----------------------------
+# ----------------------------------------------------------------
+# ----------------------------------------------------------------
+modules:
+
+# --------------------- CAP SERVER MODULE ------------------------
+- name: capproducts-srv
+# ----------------------------------------------------------------
+  type: nodejs
+  path: gen/srv
+  properties:
+    SAP_JWT_TRUST_ACL: '[{"clientid":"*","identityzone":"*"}]'
+  requires:
+  # Resources extracted from CAP configuration
+  - name: capproducts-db
+  - name: capproducts-xsuaa-service
+  - name: capproducts-destination-service
+    parameters:
+      content-target: true
+  provides:
+  - name: srv-api # required by consumers of CAP services (e.g. approuter)
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    disk-quota: 1024M
+    memory: 512M
+
+# -------------- SIDECAR MODULE - DB DEPLOYER----------------- 
+- name: capproducts-db-deployer
+# ------------------------------------------------------------
+  type: hdb
+  path: gen/db
+  requires:
+  - name: capproducts-db
+  parameters:
+    buildpack: nodejs_buildpack
+
+# -------------------- HTML5 Content ----------------------
+- name: capproducts-destination-content
+# ---------------------------------------------------------
+  type: com.sap.application.content
+  requires:
+  - name: capproducts-xsuaa-service
+    parameters:
+      service-key:
+        name: capproducts_xsuaa-key
+  - name: capproducts-html5-host
+    parameters:
+      service-key:
+        name: capproducts_html5_host-key
+  - name: capproducts-destination-service
+    parameters:
+      content-target: true        
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Name: capproducts_html5_host
+          ServiceInstanceName: capproducts-html5-host-service
+          ServiceKeyName: capproducts_html5_host-key
+          sap.cloud.service: capproducts
+        - Authentication: OAuth2UserTokenExchange
+          Name: capproducts_xsuaa
+          ServiceInstanceName: capproducts-xsuaa-service
+          ServiceKeyName: capproducts_xsuaa-key
+          sap.cloud.service: capproducts
+        existing_destinations_policy: update    
+  build-parameters:
+    no-source: true
+
+
+
+# ----------------------------------------------------------------
+# ----------------------------------------------------------------
+# ---------------------------RESOURCES----------------------------
+# ----------------------------------------------------------------
+# ----------------------------------------------------------------
+resources:
+
+# --------------------- DB - HDI CONTAINER------------------------
+- name: capproducts-db
+# ----------------------------------------------------------------
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+
+# ------------------------ XSUAA Service -------------------------  
+- name: capproducts-xsuaa-service
+# ----------------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: capproducts-xsuaa-service
+    service-plan: application
+
+# ----------------- Destination Service -------------------   
+- name: capproducts-destination-service
+# ---------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      ##HTML5Runtime_enabled: true
+      init_data:
+        subaccount:
+          destinations:
+          - Authentication: NoAuthentication
+            Description: CAP Objectstore Destination Service
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            HTML5.Timeout: 300000
+            Name: capproducts
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}  
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: capproducts-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+
+# ---------------------- HTML5 Host -------------------------
+- name: capproducts-html5-host
+# -----------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: capproducts-html5-host-service
+    service-plan: app-host
+
