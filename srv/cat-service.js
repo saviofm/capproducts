@@ -1,35 +1,48 @@
 const cds = require('@sap/cds');
 const xsenv = require("@sap/xsenv");
 const { getBundle } = require('./common/i18n');
-
+const fetch = require('node-fetch');
 
 const AWS = require('aws-sdk')
 
 class CatalogService extends cds.ApplicationService {
     init() {
-        /*
+        
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
-        // getWeight - Aqui será feito a chamada a uma balança                              //
+        // getEAN - Aqui será feito a da API de EAN                                        //
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         
-        this.on('getWeight',  async (req) => {  
-            let pesoBruto = (Math.floor(Math.random() * 22000) + 3000) / 1000;
-            let tara =  (Math.floor(Math.random() * 500) + 500) / 1000;
-            let pesoLiquido = Math.round((pesoBruto - tara) * 1000)/1000;
-            //Aguardando 1 segundo
-            await new Promise(r => setTimeout(r, 1000));
+        this.on('getEAN',  async (req) => {  
+            let barcode = req.barcode;
 
-            return {
-                pesoBruto   : pesoBruto,
-                pesoLiquido : pesoLiquido,
-                tara        : tara,
+            if (barcode) {
+                try {
+                
+                    const url = `https://api.barcodelookup.com/v3/products?barcode=${barcode}&formatted=y&key=0s36qj59io3mg6f14t60ib35q7etd8`;
+                    const method = "GET";
+                    const headers = new fetch.Headers();
+
+                    headers.set("Content-Type", 'application/json');
+
+
+                    const result = await fetch(url, { method:method, headers:headers }).then((res)=>{
+                        return res.json()
+                    });
+
+                    return result;
+           
+                } catch (error) {
+                    console.log(error);
+                    req.error(410, error.message);
+                    return;    
+                }
             }
         });        
-        */
+        
         return super.init();
     }
 }

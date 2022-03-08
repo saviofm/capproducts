@@ -12,6 +12,7 @@
         "@sap/textbundle": "4.1.0",
         "@sap/xsenv": "3.2.0",
         "@sap/xssec": "3.2.13",
+        "@types/node-fetch": "^2.6.1",
         "aws-sdk": "^2.1051.0",
         "cds-swagger-ui-express": "^0.3.0",
         "convert-excel-to-json": "^1.7.0",

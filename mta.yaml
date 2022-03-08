@@ -53,38 +53,6 @@ modules:
   parameters:
     buildpack: nodejs_buildpack
 
-# -------------------- HTML5 Content ----------------------
-- name: capproducts-destination-content
-# ---------------------------------------------------------
-  type: com.sap.application.content
-  requires:
-  - name: capproducts-xsuaa-service
-    parameters:
-      service-key:
-        name: capproducts_xsuaa-key
-  - name: capproducts-html5-host
-    parameters:
-      service-key:
-        name: capproducts_html5_host-key
-  - name: capproducts-destination-service
-    parameters:
-      content-target: true        
-  parameters:
-    content:
-      subaccount:
-        destinations:
-        - Name: capproducts_html5_host
-          ServiceInstanceName: capproducts-html5-host-service
-          ServiceKeyName: capproducts_html5_host-key
-          sap.cloud.service: capproducts
-        - Authentication: OAuth2UserTokenExchange
-          Name: capproducts_xsuaa
-          ServiceInstanceName: capproducts-xsuaa-service
-          ServiceKeyName: capproducts_xsuaa-key
-          sap.cloud.service: capproducts
-        existing_destinations_policy: update    
-  build-parameters:
-    no-source: true
 
 
 
@@ -141,13 +109,4 @@ resources:
     service-plan: lite
   requires:
   - name: srv-api
-
-# ---------------------- HTML5 Host -------------------------
-- name: capproducts-html5-host
-# -----------------------------------------------------------
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: capproducts-html5-host-service
-    service-plan: app-host
 
