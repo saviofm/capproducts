@@ -20,7 +20,7 @@ class CatalogServiceRest extends cds.ApplicationService {
         //----------------------------------------------------------------------------------//
         
         this.on('getEAN',  async (req) => {  
-            let barcode = req.barcode;
+            let barcode = req.data.barcode;
 
             if (barcode) {
                 try {
@@ -36,7 +36,7 @@ class CatalogServiceRest extends cds.ApplicationService {
                         return res.json()
                     });
 
-                    return result;
+                    return result.products[0];
            
                 } catch (error) {
                     console.log(error);
