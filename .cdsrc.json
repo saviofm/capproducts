@@ -7,20 +7,14 @@
                     "password": "admin",
                     "ID": "admin",
                     "roles": [
-                        "capproducts_admin",
-                        "capproducts_user",
-                        "nfse_display",
-                        "nfse_adminkeyuser",
-                        "nfse_adminview",
-                        "nfse_log",
-                        "nfse_monitor"                        
+                                
                     ]                    
                 },
                 "user": {
                     "password": "user",
                     "ID": "user",
                     "roles": [
-                        "capproducts_user"
+                       
                     ]                    
                 }
             }
