@@ -3,6 +3,6 @@
 @basic = Authorization: Basic admin:admin
 ### ------------------------------------------------------------------------
 # Get EAN
-GET  {{server}}/catalogRest/getEAN 
+GET  {{server}}/catalog/getEAN 
 content-type: application/json
 {{me}}

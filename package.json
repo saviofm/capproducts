@@ -16,6 +16,7 @@
         "aws-sdk": "^2.1051.0",
         "cds-swagger-ui-express": "^0.3.0",
         "convert-excel-to-json": "^1.7.0",
+        "cors": "^2.8.5",
         "express": "^4",
         "hdb": "0.19.1",
         "mbt": "^1.2.7",
