@@ -17,10 +17,12 @@ namespace capproducts;
 
 
 entity Products : cuid , managed {
-      EAN : String;
+      EAN : String not null;
+      productName : localized String;
       productDescription : localized String not null;
-      @Core.MediaType: 'image/png'
-      img : LargeBinary;
+      brand : String;
+      obs: LargeString;
+      imageUrl  : String @Core.IsURL @Core.MediaType: 'image/png';
       
 }
 @cds.odata.valuelist
@@ -53,13 +55,30 @@ annotate Products with @(
     //  }
     }
   );
-  productDescription @(
-    title       : '{i18n>productDescription}',
-    description : '{i18n>productDescription}',
+  productName @(
+    title       : '{i18n>productName}',
+    description : '{i18n>productName}',
     Common      : {
       FieldControl : #Mandatory,
       TextFor      : EAN
     }
   );
- 
+  productDescription @(
+    title       : '{i18n>productDescription}',
+    description : '{i18n>productDescription}',
+  );
+  brand @(
+    title       : '{i18n>brand}',
+    description : '{i18n>brand}',
+  );
+  obs @(
+    title       : '{i18n>obs}',
+    description : '{i18n>obs}',
+    UI.MultiLineText: true,
+  );
+  imageUrl @(
+    title       : '{i18n>imageUrl}',
+    description : '{i18n>imageUrl}',
+  );
+
 };

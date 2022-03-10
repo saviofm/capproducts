@@ -8,3 +8,24 @@ content-type: application/json
 {{me}}
 
 { "barcode": "7896061951343"}
+
+### ------------------------------------------------------------------------
+# Get EAN inline
+GET  {{server}}/catalog-service-rest/getEAN(barcode=7896061951343)
+content-type: application/json
+{{me}}
+
+### ------------------------------------------------------------------------
+# Get EAN inline
+POST {{server}}/catalog-service-rest/products 
+content-type: application/json
+{{me}}
+
+{
+  "EAN": "7896061951343",
+  "productName": "Lenço De Papel Softy's Elite Folha Dupla Com 15 Unidades 15 Unidades",
+  "productDescription": "Lenços de papel softy's acompanham você em qualquer ocasião. esteja onde estiver, tenha sempre um lenço de papel nas mãos em mãos!",
+  "brand": "Softy's",
+  "obs": "Produto inserido via request:http",
+  "imageUrl": "https://images.barcodelookup.com/21476/214767799-1.jpg"
+}

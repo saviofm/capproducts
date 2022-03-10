@@ -5,7 +5,7 @@ using CatalogService as CatalogService from './cat-service';
 @protocol : 'rest'
 service CatalogServiceRest {
 
-    entity PerPersonal as projection on CatalogService.Products;
+    entity products as projection on CatalogService.Products;
 
     type product {}
 

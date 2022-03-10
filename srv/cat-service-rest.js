@@ -35,8 +35,16 @@ class CatalogServiceRest extends cds.ApplicationService {
                     const result = await fetch(url, { method:method, headers:headers }).then((res)=>{
                         return res.json()
                     });
+                    let product = result.products[0];
+                    
+                    return {
+                        barcode: product.barcode_number,
+                        productName: product.title,
+                        productDescription: product.description,
+                        brand: product.brand,
+                        imageUrl: product.images[0]
+                    }
 
-                    return result.products[0];
            
                 } catch (error) {
                     console.log(error);

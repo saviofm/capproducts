@@ -32,7 +32,7 @@ annotate CatalogService.Products with @(
         HeaderInfo: {          
             Title : { 
                 $Type : 'UI.DataField',
-                Value: '{i18n>Products}'
+                Value: productName
             },
             TypeName: '{i18n>Product}',
             TypeNamePlural: '{i18n>Products}', 
@@ -54,6 +54,11 @@ annotate CatalogService.Products with @(
                     $Type : 'UI.DataField',
                     Value: EAN
                 },
+                {
+                    $Type : 'UI.DataField',
+                    Value: productName
+                },
+                
                 {
                     $Type : 'UI.DataField',
                     Value: productDescription

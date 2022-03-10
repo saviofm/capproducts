@@ -118,4 +118,4 @@ resources:
   parameters:
     service: objectstore
     service-name: capproducts-objectstore-service
-    service-plan: s3-standard
+    service-plan: standard
