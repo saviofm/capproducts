@@ -31,6 +31,7 @@ modules:
   # Resources extracted from CAP configuration
   - name: capproducts-db
   - name: capproducts-xsuaa-service
+  - name: capproducts-objectstore-service
   - name: capproducts-destination-service
     parameters:
       content-target: true
@@ -110,3 +111,11 @@ resources:
   requires:
   - name: srv-api
 
+# -------------- AWS S3 Objectore Service ------------------
+- name: capproducts-objectstore-service
+# -----------------------------------------------------------
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: objectstore
+    service-name: capproducts-objectstore-service
+    service-plan: s3-standard

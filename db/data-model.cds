@@ -19,6 +19,9 @@ namespace capproducts;
 entity Products : cuid , managed {
       EAN : String;
       productDescription : localized String not null;
+      @Core.MediaType: 'image/png'
+      img : LargeBinary;
+      
 }
 @cds.odata.valuelist
 //Annotation
