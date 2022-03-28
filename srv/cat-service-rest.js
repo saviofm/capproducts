@@ -104,14 +104,66 @@ class CatalogServiceRest extends cds.ApplicationService {
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
+        // PRODUCTS - READ -  Obtém o stream                         //
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        this.on('READ', 'Products', (req, next) => {
+            if (req.data.ID && req.headers['content-type'] === 'application/octet-stream') {            
+                const params = {
+                    Bucket: objectstore.credentials.bucket,
+                    Key: req.data.ID
+                };
+                return s3.getObject(params).createReadStream()
+                
+ 
+            } else {
+                return next()
+            }
+        });
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
         // PRODUCTS - READ - Obtém o Content como stream e o url                            //
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
-        this.after('READ', ['Products','ProductsFiori'], async each => {
-           return await crud.ProductRead(each, s3, bucket);
+        this.after('READ', 'Products', (each, req) => {
+            if (!req.headers['content-type'] === 'application/octet-stream') {
+                crud.ProductRead(each, s3, bucket);
+            }
         });
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        // PRODUCTS -  FUNCTION CONTENT - get Image Content                                 //
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------//
+        this.on('imageContent', 'Products', async (req) => {
+            
+            let oProduct = await cds.run(req.query);
+            if (oProduct.length > 0) {
+                oProduct = oProduct[0];
+                //if (oProduct[0].ID && req.headers['content-type'] === 'application/octet-stream') {
+                         
+                    const params = {
+                        Bucket: objectstore.credentials.bucket,
+                        Key: oProduct.ID
+                    };
+                    
+                    const object = await s3.getObject(params).promise();
+                    req.res.contentType(oProduct.imageType);
+                    //req.res.contentType('application/octet-stream');
+                    return object.Body;
+
+                //}
+            } else {
+                req.error(410, "not found");
+            }
         
+        });
+       
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
@@ -136,6 +188,7 @@ class CatalogServiceRest extends cds.ApplicationService {
             } else {
                 return next();
             }
+            
         });
         
         //----------------------------------------------------------------------------------//
@@ -153,7 +206,6 @@ class CatalogServiceRest extends cds.ApplicationService {
             
         });
 
-       
 
         return super.init();
     }

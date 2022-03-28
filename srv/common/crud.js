@@ -55,7 +55,7 @@ async function ProductDelete(req, s3, bucket){
                 Key: req.data.ID
             };
             await s3.deleteObject(params).promise();
-            console.log('test');
+        
         
 
             if (req.data.imageContent !== undefined && req.data.imageContent === null) {

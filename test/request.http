@@ -60,14 +60,7 @@ DELETE {{server}}/catalog/Products(cf31b7df-51a6-47a2-a860-f6f0e1e1960e)/imageCo
 ### ------------------------------------------------------------------------
 ### ------------------------------------------------------------------------
 ### ------------------------------------------------------------------------
-# Get Products
-GET  {{server}}/catalog-service-rest/Products
-content-type: application/json
-{{me}}
 
-### ------------------------------------------------------------------------
-### Read Medias
-GET {{server}}/catalog-service-rest/Products
 
 ### ------------------------------------------------------------------------
 # Get EAN
@@ -83,20 +76,48 @@ GET  {{server}}/catalog-service-rest/getEAN(barcode=7896061951343)
 content-type: application/json
 {{me}}
 
-### ------------------------------------------------------------------------
-# Get EAN inline
-POST {{server}}/catalog-service-rest/Products 
-content-type: application/json
-{{me}}
 
-{
-  "EAN": "7896061951343",
-  "productName": "Lenço De Papel Softy's Elite Folha Dupla Com 15 Unidades 15 Unidades",
-  "productDescription": "Lenços de papel softy's acompanham você em qualquer ocasião. esteja onde estiver, tenha sempre um lenço de papel nas mãos em mãos!",
-  "brand": "Softy's",
-  "obs": "Produto inserido via request:http",
-  "imageUrl": "https://images.barcodelookup.com/21476/214767799-1.jpg"
+
+### Create Product
+POST  {{server}}/catalog/Products
+Accept: application/json
+Content-Type: application/json
+
+{ 
+  
+  "EAN": "7894900011524",
+  "productName": "Produto Test",
+  "productDescription": "Desc produto",
+  "brand": "Marca Produto" 
 }
+
+### Read Product
+GET {{server}}/catalog-service-rest/Products
+
+
+### Read product specific 
+GET {{server}}/catalog-service-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960e
+
+
+### Read Binary
+GET {{server}}/catalog-service-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960e/imageContent
+
+
+### Update Product
+PUT  {{server}}/catalog-service-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960e
+Accept: application/json
+Content-Type: application/json
+
+{ 
+  "productDescription": "Desc produto alterado",
+  "imageType": "image/png"
+}
+
+
+
+### Delete Product
+DELETE {{server}}/catalog-service-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960e
+
 
 
 

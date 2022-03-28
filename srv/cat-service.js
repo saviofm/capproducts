@@ -72,9 +72,10 @@ class CatalogService extends cds.ApplicationService {
                     Key: req.data.ID
                 };
                 
-                return {   
-                    value: _getObjectStream(req.data.ID)
-                }
+               return {
+                   value: s3.getObject(params).createReadStream()
+               };
+ 
             } else {
                 return next()
             }
@@ -131,7 +132,7 @@ class CatalogService extends cds.ApplicationService {
             return await crud.ProductDelete(req, s3, bucket);
             
         });
-
+        /*
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
@@ -202,6 +203,7 @@ class CatalogService extends cds.ApplicationService {
                 return next();
             }
         });
+        
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
         //----------------------------------------------------------------------------------//
@@ -244,19 +246,7 @@ class CatalogService extends cds.ApplicationService {
             each.mediaUrl = s3.getSignedUrl('getObject', params)
 
         });   
-
-        //----------------------------------------------------------------------------------//
-        //_getObjectStream                                                                  //
-        //----------------------------------------------------------------------------------//        
-        /* Get object stream from S3 */
-        function _getObjectStream(objectKey) {
-            const params = {
-                Bucket: objectstore.credentials.bucket,
-                Key: objectKey
-            };
-            return s3.getObject(params).createReadStream()
- 
-        };
+        */
 
 
         return super.init();
