@@ -14,17 +14,19 @@ namespace capproducts;
 //------------------------------------------------------//
 //------------------------------------------------------//
 //Entity
-
-
 entity Products : cuid , managed {
       EAN : String not null;
-      productName : localized String;
-      productDescription : localized String not null;
+      productName : localized String not null;
+      productDescription : localized String;
       brand : String;
       obs: LargeString;
-      imageUrl  : String @Core.IsURL @Core.MediaType: 'image/png';
-      
+      imageContent: LargeBinary @Core.MediaType: imageType;
+      imageType : String @Core.IsMediaType: true;
+      media     : Composition of many ProductMedia
+                         on media.product  = $self;     
 }
+
+
 @cds.odata.valuelist
 //Annotation
 annotate Products with @(
@@ -76,9 +78,43 @@ annotate Products with @(
     description : '{i18n>obs}',
     UI.MultiLineText: true,
   );
-  imageUrl @(
-    title       : '{i18n>imageUrl}',
-    description : '{i18n>imageUrl}',
+  imageContent @(
+    title       : '{i18n>imageContent}',
+    description : '{i18n>imageContent}',
   );
+  imageType @(
+    title       : '{i18n>imageType}',
+    description : '{i18n>imageType}',
+  );
+};
 
+
+//------------------ PRODUCTSMEDIA  -----------------//
+//------------------------------------------------------//
+//------------------------------------------------------//
+//Entity
+entity ProductMedia: cuid , managed {
+  product: Association to Products;
+  mediaType : String @Core.IsMediaType: true;
+  mediaContent: LargeBinary @Core.MediaType: mediaType;
+}
+
+@cds.odata.valuelist
+//Annotation
+annotate ProductMedia with @(
+  title              : '{i18n>ProductMedia}',
+  description        : '{i18n>ProductMedia}'
+){
+  product @(
+    title       : '{i18n>product}',
+    description : '{i18n>product}',
+  );
+  imageContent @(
+    title       : '{i18n>imageContent}',
+    description : '{i18n>imageContent}',
+  );
+  imageType @(
+    title       : '{i18n>imageType}',
+    description : '{i18n>imageType}',
+  );
 };

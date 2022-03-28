@@ -4,7 +4,7 @@ using CatalogService from './cat-service';
 //------------------------------------------------------//
 //------------------------------------------------------//
 //List Page
-annotate CatalogService.Products with @(
+annotate CatalogService.ProductsFiori with @(
 	UI: {
         LineItem: [
 			{   
@@ -15,6 +15,11 @@ annotate CatalogService.Products with @(
             {   
                 $Type : 'UI.DataField', 
                 Value : productDescription,
+                ![@UI.Importance] : #High
+            },
+            {   
+                $Type : 'UI.DataField', 
+                Value : imageUrl,
                 ![@UI.Importance] : #High
             }
 		],
@@ -31,14 +36,13 @@ annotate CatalogService.Products with @(
 	UI: {
         HeaderInfo: {          
             Title : { 
-                $Type : 'UI.DataField',
                 Value: productName
             },
             TypeName: '{i18n>Product}',
-            TypeNamePlural: '{i18n>Products}', 
+            TypeNamePlural: '{i18n>Products}',
+            TypeImageUrl   : imageUrl,
             Description: { 
-                $Type: 'UI.DataField', 
-                Value: productDescription 
+                Value: EAN 
             }, 
         },
 		HeaderFacets            : [
@@ -49,19 +53,15 @@ annotate CatalogService.Products with @(
             }
         ],
         FieldGroup #GeneralData: {
+            $Type : 'UI.FieldGroupType',
 			Data: [
                 {
                     $Type : 'UI.DataField',
-                    Value: EAN
-                },
-                {
-                    $Type : 'UI.DataField',
-                    Value: productName
-                },
-                
-                {
-                    $Type : 'UI.DataField',
                     Value: productDescription
+                },
+                {
+                    $Type : 'UI.DataField',
+                    Value: obs
                 }             
 			]                        
         },
