@@ -95,8 +95,9 @@ annotate Products with @(
 //Entity
 entity ProductMedia: cuid , managed {
   product: Association to Products;
+  fileName : String;
   mediaType : String @Core.IsMediaType: true;
-  mediaContent: LargeBinary @Core.MediaType: mediaType;
+  mediaContent: LargeBinary @Core.MediaType: mediaType @Core.ContentDisposition.Filename: fileName @Core.ContentDisposition.Type: 'inline';
 }
 
 @cds.odata.valuelist
