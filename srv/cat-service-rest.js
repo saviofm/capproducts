@@ -47,24 +47,21 @@ class CatalogRest extends cds.ApplicationService {
             if (barcode) {
                 try {
                 
-                    const url = `https://api.barcodelookup.com/v3/products?barcode=${barcode}&formatted=y&key=0s36qj59io3mg6f14t60ib35q7etd8`;
+                    const url = `https://barcode.monster/api/${barcode}` 
                     const method = "GET";
                     const headers = new fetch.Headers();
 
                     headers.set("Content-Type", 'application/json');
 
-
                     const result = await fetch(url, { method:method, headers:headers }).then((res)=>{
                         return res.json()
                     });
-                    let product = result.products[0];
                     
                     return {
-                        barcode: product.barcode_number,
-                        productName: product.title,
-                        productDescription: product.description,
-                        brand: product.brand,
-                        imageUrl: product.images[0]
+                        barcode: result.code,
+                        productName: result.description,
+                        brand: result.company,
+                        imageUrl: result.image_url
                     }
 
            
