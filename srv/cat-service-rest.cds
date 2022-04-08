@@ -11,13 +11,14 @@ service CatalogRest {
             action deleteImageContent();
         };
     
-    action postImageContent(ID: UUID, contentURL:LargeString);
-
+   
     entity ProductMedia as projection on CatalogService.ProductMedia;
 
     
     type product {}
 
     function getEAN(barcode: String)  returns product;
+    
+    action postImageContent(ID: UUID, contentURL:LargeString);
 
 }

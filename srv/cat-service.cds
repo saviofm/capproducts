@@ -22,6 +22,12 @@ service CatalogService {// @( requires:'authenticated-user') {
         product : redirected to Products    
     };
 
+    type product {};
+
+    function getEAN (barcode: String)  returns product;
+
+    action postImageContent (ID: UUID, contentURL:LargeString);
+
 
 }
 

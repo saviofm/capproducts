@@ -9,6 +9,15 @@
 ### ------------------------------------------------------------------------
 ### ------------------------------------------------------------------------
 
+
+### ------------------------------------------------------------------------
+# Get EAN inline
+GET  {{server}}/catalog/getEAN(barcode=%277896061951343%27)
+content-type: application/json
+
+
+
+
 ### Create Product
 POST  {{server}}/catalog/Products
 Accept: application/json
