@@ -35,8 +35,13 @@ Content-Type: application/json
 GET {{server}}/catalog/Products
 
 
+### Read Product with filter
+GET {{server}}/catalog/Products?filter=(substringof(%27Lenco%27,productName)%20or%20substringof(%27Lenço%27,brand))
+
 ### Read product specific 
 GET {{server}}/catalog/Products(cf31b7df-51a6-47a2-a860-f6f0e1e1960e)
+
+
 
 
 ### Read Binary
@@ -64,7 +69,7 @@ Content-Type: image/png
 DELETE {{server}}/catalog/Products(cf31b7df-51a6-47a2-a860-f6f0e1e1960e)/imageContent
 
 ### Delete Product 
-DELETE {{server}}/catalog/Products(cf31b7df-51a6-47a2-a860-f6f0e1e1960e)
+DELETE {{server}}/catalog/Products(80d94aaa-f9e1-4ee5-81a7-b4ae58ff573a)
 
 
 ### ------------------------------------------------------------------------
@@ -98,8 +103,8 @@ Accept: application/json
 Content-Type: application/json
 
 { 
-  "ID": "cf31b7df-51a6-47a2-a860-f6f0e1e1960e",
-  "EAN": "7894900011522",
+  "ID": "cf31b7df-51a6-47a2-a860-f6f0e1e1960a",
+  "EAN": "7894900011530",
   "productName": "Produto Test",
   "productDescription": "Desc produto",
   "brand": "Marca Produto",
@@ -108,6 +113,10 @@ Content-Type: application/json
 
 ### Read Product
 GET {{server}}/catalog-rest/Products
+
+
+### Read Product with filter
+GET {{server}}/catalog/Products?filter=(substringof(%27Lenco%27,productName)%20or%20substringof(%27Lenço%27,brand))
 
 
 ### Read product specific 
@@ -129,7 +138,7 @@ Content-Type: application/json
 }
 
 ### Delete Product 
-DELETE {{server}}/catalog-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960e
+DELETE {{server}}/catalog-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960a
 
 
 
