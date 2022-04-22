@@ -33,7 +33,8 @@ Content-Type: application/json
 
 ### Read Product
 GET {{server}}/catalog/Products
-
+Accept:  application//xml
+Content-Type: application/xml
 
 ### Read Product with filter
 GET {{server}}/catalog/Products?filter=(substringof(%27Lenco%27,productName)%20or%20substringof(%27Lenço%27,brand))
@@ -138,7 +139,7 @@ Content-Type: application/json
 }
 
 ### Delete Product 
-DELETE {{server}}/catalog-rest/Products/cf31b7df-51a6-47a2-a860-f6f0e1e1960a
+DELETE {{server}}/catalog-rest/Products/5f12027a-6f6b-426a-ade9-3fc2a6388f18
 
 
 

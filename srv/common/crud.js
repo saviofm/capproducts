@@ -171,7 +171,7 @@ async function getEANAPI(req) {
             
             return {
                 barcode: result.code,
-                productName: result.description,
+                productName: result.description.replace("(from barcode.monster)", ""),
                 brand: result.company,
                 imageUrl: result.image_url
             }
