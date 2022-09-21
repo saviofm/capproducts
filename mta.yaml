@@ -99,6 +99,8 @@ resources:
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
             HTML5.Timeout: 300000
+            WebIDEEnabled: true
+            AppgyverEnabled: true
             Name: capproducts
             ProxyType: Internet
             Type: HTTP
