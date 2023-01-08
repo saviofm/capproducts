@@ -1,6 +1,7 @@
 {
   "configurations": [
   
+  
     {
       "command": "cds run --with-mocks",
       "name": "cds run",

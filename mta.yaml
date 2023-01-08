@@ -95,7 +95,7 @@ resources:
         subaccount:
           destinations:
           - Authentication: NoAuthentication
-            Description: CAP Objectstore Destination Service
+            Description: CAP ObjectStore Products
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
             HTML5.Timeout: 300000
@@ -105,6 +105,30 @@ resources:
             ProxyType: Internet
             Type: HTTP
             URL: ~{srv-api/srv-url}  
+          - Authentication: NoAuthentication
+            Description: CAP ObjectStore Products Catalog
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            HTML5.Timeout: 300000
+            WebIDEEnabled: true
+            AppgyverEnabled: true
+            sap.processautomation.enabled: true
+            Name: capproducts_catalog
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}/catalog
+          - Authentication: NoAuthentication
+            Description: CAP ObjectStore Products Catalog Rest
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            HTML5.Timeout: 300000
+            WebIDEEnabled: true
+            AppgyverEnabled: true
+            sap.processautomation.enabled: true
+            Name: capproducts_catalog_rest
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}/catalog-rest            
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
