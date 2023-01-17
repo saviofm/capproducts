@@ -9,13 +9,6 @@
                     "roles": [
                                 
                     ]                    
-                },
-                "user": {
-                    "password": "user",
-                    "ID": "user",
-                    "roles": [
-                       
-                    ]                    
                 }
             }
         }

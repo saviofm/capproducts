@@ -18,8 +18,10 @@
         "aws-sdk": "^2.1051.0",
         "cors": "^2.8.5",
         "express": "^4",
-        "hdb": "0.19.1",
-        "passport": "^0.5.2"
+        "hdb": "0.19.5",
+        "https": "^1.0.0",
+        "passport": "0.6.0",
+        "perf_hooks": "^0.0.1"
     },
     "devDependencies": {
         "@sap/cds-compiler": "3.4.4",
@@ -91,8 +93,5 @@
         "hana": {
             "deploy-format": "hdbtable"
         }
-    },
-    "sapux": [
-        "app/products"
-    ]
+    }
 }

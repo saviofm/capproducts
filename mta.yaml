@@ -41,8 +41,8 @@ modules:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
-    disk-quota: 1024M
-    memory: 512M
+    disk-quota: 512M
+    memory: 256M
 
 # -------------- SIDECAR MODULE - DB DEPLOYER----------------- 
 - name: capproducts-db-deployer
@@ -51,6 +51,7 @@ modules:
   path: gen/db
   requires:
   - name: capproducts-db
+  - name: capproducts-xsuaa-service
   parameters:
     buildpack: nodejs_buildpack
 
